@@ -6,7 +6,7 @@ import PostAddForm from "@components/domain/PostList/PostAddForm";
 import useAsync from "@hooks/useAsync";
 import { Header, Spinner } from "@components/index";
 
-function PostPage() {
+function PostsPage() {
   const initialPosts = useAsync(async () => {
     return await axios
       .get("https://jsonplaceholder.typicode.com/posts")
@@ -40,4 +40,4 @@ function PostPage() {
   );
 }
 
-export default PostPage;
+export default PostsPage;
