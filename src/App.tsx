@@ -1,42 +1,23 @@
-import axios from "axios";
-import useAsync from "./hooks/useAsync";
-import PostList, { PostProps } from "@components/domain/PostList";
-import PostProvider from "@contexts/PostProvider";
-import { useCallback } from "react";
-import PostAddForm from "@components/domain/PostList/PostAddForm";
-import { Header, Spinner } from "./components";
+import { Route, Routes } from "react-router-dom";
+import { NotFoundPage, PostPage, PostsPage } from "./pages";
+import DefaultTemplate from "@components/template/DefaultTemplate";
 
 function App() {
-  const initialPosts = useAsync(async () => {
-    return await axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.data);
-  }, []);
-
-  const handleAddPost = useCallback(async (post: PostProps) => {
-    return await axios
-      .post(`https://jsonplaceholder.typicode.com/posts`, post)
-      .then((response) => response.data);
-  }, []);
-
-  const handleDeletePost = useCallback(async (id: number) => {
-    return await axios
-      .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then(() => ({ id }));
-  }, []);
-
   return (
-    <PostProvider
-      initialPosts={initialPosts.value}
-      handleAddPost={handleAddPost}
-      handleDeletePost={handleDeletePost}
-    >
-      <div>
-        <Header>Posts</Header>
-        <PostAddForm />
-        {initialPosts.isLoading ? <Spinner /> : <PostList />}
-      </div>
-    </PostProvider>
+    <DefaultTemplate>
+      <Routes>
+        <Route path="/" element={<h1>Home</h1>}></Route>
+      </Routes>
+      <Routes>
+        <Route path="/posts" element={<PostsPage />}></Route>
+      </Routes>
+      <Routes>
+        <Route path="/posts/:postId" element={<PostPage />}></Route>
+      </Routes>
+      <Routes>
+        <Route path="*" element={<NotFoundPage />}></Route>
+      </Routes>
+    </DefaultTemplate>
   );
 }
 

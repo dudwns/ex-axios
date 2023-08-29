@@ -3,7 +3,7 @@ import useAsyncFn from "./useAsyncFn";
 
 const useAsync = (
   fn: () => Promise<{ id: number; title: string; body: string }[]>,
-  deps: object[]
+  deps: string[]
 ) => {
   const [state, callback] = useAsyncFn(fn, deps);
 

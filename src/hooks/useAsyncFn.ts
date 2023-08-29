@@ -8,7 +8,7 @@ export interface useAsyncFnState {
 
 const useAsyncFn = (
   fn: () => Promise<{ id: number; title: string; body: string }[]>,
-  deps: object[]
+  deps: string[]
 ): [useAsyncFnState, () => Promise<object[]>] => {
   const lastCallId = useRef(0);
   const [state, setState] = useState<useAsyncFnState>({
